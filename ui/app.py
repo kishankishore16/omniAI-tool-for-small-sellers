@@ -1,6 +1,13 @@
 import streamlit as st
 import os
+import sys
 import requests
+
+# Ensure the root project directory is in the Python path for Streamlit Cloud
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 import ui.admin_view as admin_view
 import ui.customer_view as customer_view
 
