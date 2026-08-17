@@ -1,9 +1,8 @@
 import logging
 import uuid
-from typing import Any, Optional
+from typing import Any
 
 from api.schemas import ChatResponse, SourceProduct, ProductRecord
-from utils.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -135,11 +134,12 @@ class RAGAgent:
 
         for p in products:
             # Convert distance to relevance score (lower distance = higher relevance)
-            distance = distance_map.get(p.id, 1.0)
+            pid = p.id or 0
+            distance = distance_map.get(pid, 1.0)
             relevance = max(0.0, min(1.0, 1.0 - distance))
             sources.append(
                 SourceProduct(
-                    id=p.id,
+                    id=pid,
                     name=p.name,
                     price=p.price,
                     relevance_score=round(relevance, 3),

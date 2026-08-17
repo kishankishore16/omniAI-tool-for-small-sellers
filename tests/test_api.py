@@ -74,7 +74,10 @@ class TestChatEndpoint:
 
 class TestAnalyticsEndpoint:
     def test_analytics_empty(self, client):
-        response = client.get("/api/analytics")
+        response = client.get(
+            "/api/analytics",
+            headers={"X-Admin-Token": "admin"},
+        )
         assert response.status_code == 200
         data = response.json()
         assert "total_products" in data
@@ -98,6 +101,7 @@ class TestProductUpload:
             response = client.post(
                 "/api/process-product",
                 files={"file": (images[0], f, "image/png")},
+                headers={"X-Admin-Token": "admin"},
             )
 
         assert response.status_code == 200
